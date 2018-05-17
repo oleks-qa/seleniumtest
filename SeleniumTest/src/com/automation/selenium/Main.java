@@ -1,4 +1,4 @@
-// kucherenko
+// verezhevych
 package com.automation.selenium;
 
 import org.openqa.selenium.By;
