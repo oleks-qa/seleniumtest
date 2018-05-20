@@ -12,6 +12,7 @@ public class Main {
 
 
     public  By searchField = By.cssSelector("input#lst-ib");
+    public  By titleElement = By.cssSelector("img#hplogo");
     public  String searchValue = "selenium";
     public  WebDriver webDriver;
 
@@ -28,5 +29,19 @@ public class Main {
         searchFieldElement.sendKeys(Keys.ENTER);
         String searchFieldValue = searchFieldElement.getAttribute("value");
         Assert.assertTrue("Search field value is incorrect", searchFieldValue.equals(searchValue));
+    }
+
+
+    @Test
+    public void altTextTitleTest() {
+        WebElement searchFieldElement = webDriver.findElement(titleElement);
+        String titleElementTextValue = searchFieldElement.getAttribute("alt");
+        Assert.assertTrue("Alternative text is incorrect", titleElementTextValue.equals("Google"));
+    }
+
+
+    @After
+    public void stop () {
+        webDriver.quit();
     }
 }
