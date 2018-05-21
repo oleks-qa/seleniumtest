@@ -8,25 +8,57 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.*;
 import org.junit.*;
 
+import java.util.concurrent.TimeUnit;
+
 public class Main {
 
 
-    public  By searchField = By.cssSelector("input#lst-ib");
-    public  String searchValue = "selenium";
-    public  WebDriver webDriver;
+    public By searchField = By.cssSelector("input#lst-ib");
+    public By firstResult = By.cssSelector("h3.r a");
+    public By headerOfPage = By.cssSelector("h1.entry-title *");
+    public String searchValue1 = "selenium";
+    public String searchValue2 = "почему гит такой сложный";
+    public String titleOfTestPage = "Почему я ненавижу Git или Git не должен быть таким сложным для изучения";
+    public WebDriver webDriver;
 
     @Before
     public void setUp () {
         webDriver = new FirefoxDriver();
         webDriver.get("https://google.com");
+        webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     @Test
     public void searchFieldTest() {
         WebElement searchFieldElement = webDriver.findElement(searchField);
-        searchFieldElement.sendKeys(searchValue);
+        searchFieldElement.sendKeys(searchValue1);
         searchFieldElement.sendKeys(Keys.ENTER);
         String searchFieldValue = searchFieldElement.getAttribute("value");
-        Assert.assertTrue("Search field value is incorrect", searchFieldValue.equals(searchValue));
+        Assert.assertTrue("Search field value is incorrect", searchFieldValue.equals(searchValue1));
+    }
+
+    @Test
+    public void firstResultTest() {
+        search(searchValue2);
+        clickOnFirstResult();
+        WebElement headerOfPageElement = webDriver.findElement(headerOfPage);
+        String searchFieldValue = headerOfPageElement.getText();
+        Assert.assertTrue("Почему я ненавижу Git или Git не должен быть таким сложным для изучения", searchFieldValue.equals(titleOfTestPage));
+    }
+
+    @After
+    public void tearDown() {
+        webDriver.quit();
+    }
+
+    public void search(String text) {
+        WebElement searchFieldElement = webDriver.findElement(searchField);
+        searchFieldElement.sendKeys(text);
+        searchFieldElement.sendKeys(Keys.ENTER);
+    }
+
+    public void clickOnFirstResult() {
+        WebElement firstResultElement = webDriver.findElement(firstResult);
+        firstResultElement.click();
     }
 }
