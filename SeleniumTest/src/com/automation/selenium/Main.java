@@ -29,4 +29,10 @@ public class Main {
         String searchFieldValue = searchFieldElement.getAttribute("value");
         Assert.assertTrue("Search field value is incorrect", searchFieldValue.equals(searchValue));
     }
+
+    @After
+    public void tearDown() {
+        if (webDriver != null)
+            webDriver.close();
+    }
 }
