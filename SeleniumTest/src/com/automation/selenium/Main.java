@@ -8,10 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.*;
 import org.junit.*;
 
+import java.util.concurrent.TimeUnit;
+
 public class Main {
 
 
-    public  By searchField = By.cssSelector("input#lst-ib");
+    public By searchField = By.cssSelector("input#lst-ib");
+    public By searchResultLink = By.cssSelector("div.g:nth-of-type(2) h3 a");
     public  String searchValue = "selenium";
     public  WebDriver webDriver;
 
@@ -34,5 +37,16 @@ public class Main {
     public void tearDown() {
         if (webDriver != null)
             webDriver.close();
+    }
+
+    @Test
+    public void searchResultLinkTest() {
+        WebElement searchFieldElement = webDriver.findElement(searchField);
+        searchFieldElement.sendKeys(searchValue);
+        searchFieldElement.sendKeys(Keys.ENTER);
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        String searchResultLinkText = webDriver.findElement(searchResultLink).getAttribute("href");
+        Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
+
     }
 }
