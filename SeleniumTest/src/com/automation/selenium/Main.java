@@ -51,7 +51,7 @@ public class Main {
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
     }
 
-    
+
     @After
     public void stop () {
         webDriver.quit();
