@@ -1,4 +1,4 @@
-// kucherenko
+// Zhugan
 package com.automation.selenium;
 
 import org.openqa.selenium.By;
@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
 
+    public  By titleElement = By.cssSelector("img#hplogo");
     public By searchField = By.cssSelector("input#lst-ib");
     public By searchResultLink = By.cssSelector("div.g:nth-of-type(2) h3 a");
     public  String searchValue = "selenium";
@@ -34,6 +35,13 @@ public class Main {
     }
 
     @Test
+    public void altTextTitleTest() {
+        WebElement searchFieldElement = webDriver.findElement(titleElement);
+        String titleElementTextValue = searchFieldElement.getAttribute("alt");
+        Assert.assertTrue("Alternative text is incorrect", titleElementTextValue.equals("Google"));
+    }
+
+    @Test
     public void searchResultLinkTest() {
         WebElement searchFieldElement = webDriver.findElement(searchField);
         searchFieldElement.sendKeys(searchValue);
@@ -41,5 +49,11 @@ public class Main {
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         String searchResultLinkText = webDriver.findElement(searchResultLink).getAttribute("href");
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
+    }
+
+
+    @After
+    public void stop () {
+        webDriver.quit();
     }
 }
