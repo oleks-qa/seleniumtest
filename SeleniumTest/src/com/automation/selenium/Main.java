@@ -51,11 +51,6 @@ public class Main {
         Assert.assertTrue("Почему я ненавижу Git или Git не должен быть таким сложным для изучения", searchFieldValue.equals(titleOfTestPage));
     }
 
-    @After
-    public void tearDown() {
-        webDriver.quit();
-    }
-
     public void search(String text) {
         WebElement searchFieldElement = webDriver.findElement(searchField);
         searchFieldElement.sendKeys(text);
@@ -84,9 +79,8 @@ public class Main {
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
     }
 
-
     @After
-    public void stop () {
+    public void tearDown() {
         webDriver.quit();
     }
 }
