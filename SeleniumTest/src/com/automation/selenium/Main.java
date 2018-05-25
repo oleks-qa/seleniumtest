@@ -42,6 +42,12 @@ public class Main {
         Assert.assertTrue("Search field value is incorrect", searchFieldValue.equals(searchValue));
     }
 
+    @After
+    public void tearDown() {
+        if (webDriver != null)
+            webDriver.close();
+    }
+
     @Test
     public void firstResultTest() {
         search(searchValue2);
@@ -77,6 +83,7 @@ public class Main {
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         String searchResultLinkText = webDriver.findElement(searchResultLink).getAttribute("href");
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
+
     }
 
     @After
