@@ -20,8 +20,10 @@ public class Main {
     public By headerOfPage = By.cssSelector("h1.entry-title *");
     public String searchValue = "selenium";
     public String searchValue2 = "почему гит такой сложный";
+    public  String searchValue3 = "Skype";
     public String titleOfTestPage = "Почему я ненавижу Git или Git не должен быть таким сложным для изучения";
     public WebDriver webDriver;
+    public String url = webDriver.getCurrentUrl();
 
     public  By titleElement = By.cssSelector("img#hplogo");
     public By searchResultLink = By.cssSelector("div.g:nth-of-type(2) h3 a");
@@ -62,7 +64,7 @@ public class Main {
         firstResultElement.click();
     }
 
-    @Test
+   @Test
     public void altTextTitleTest() {
         WebElement searchFieldElement = webDriver.findElement(titleElement);
         String titleElementTextValue = searchFieldElement.getAttribute("alt");
@@ -78,9 +80,19 @@ public class Main {
         String searchResultLinkText = webDriver.findElement(searchResultLink).getAttribute("href");
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
     }
+    @Test
+    public void WorkingTitle(){
+        WebElement searchFieldElement = webDriver.findElement(searchField);
+        searchFieldElement.sendKeys(searchValue3);
+        searchFieldElement.sendKeys(Keys.ENTER);
+        clickOnFirstResult();
 
-    @After
+        Assert.assertFalse("Url has not changed", url.equals("https://google.com"));
+
+    }
+
+   /* @After
     public void tearDown() {
         webDriver.quit();
-    }
+    }*/
 }
