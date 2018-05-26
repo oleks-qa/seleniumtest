@@ -1,6 +1,6 @@
 // verezhevych
-
 // Zhugan
+// orel
 package com.automation.selenium;
 
 import org.openqa.selenium.By;
@@ -16,6 +16,7 @@ public class Main {
 
 
     public By searchField = By.cssSelector("input#lst-ib");
+    public By searchFieldGmailLink = By.cssSelector("div.gb_Q:nth-child(1) > a:nth-child(1)");
     public By firstResult = By.cssSelector("h3.r a");
     public By headerOfPage = By.cssSelector("h1.entry-title *");
     public String searchValue = "selenium";
@@ -77,6 +78,16 @@ public class Main {
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         String searchResultLinkText = webDriver.findElement(searchResultLink).getAttribute("href");
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValue));
+    }
+
+    @Test
+    public void searchGmailLinkTest() {
+        WebElement searchGmailElement = webDriver.findElement(searchFieldGmailLink);
+        if (searchGmailElement.isDisplayed()) {
+            System.out.println("Gmail link has been found. Test PASSED.");
+        } else {
+            System.out.println("Gmail link is not found. Test FAILED.");
+        }
     }
 
     @After
