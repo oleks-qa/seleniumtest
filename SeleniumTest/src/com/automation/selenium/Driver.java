@@ -11,7 +11,7 @@ public class Driver {
     WebDriver webDriver;
 
     public Driver(BrowserType browserType) {
-        if (browserType == BrowserType.Firefox) {
+        if (browserType == BrowserType.FIREFOX) {
             webDriver = new FirefoxDriver();
         }
     }

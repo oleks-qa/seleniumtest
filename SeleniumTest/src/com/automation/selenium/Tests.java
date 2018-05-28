@@ -20,7 +20,7 @@ public class Tests {
 
     @Before
     public void setUp () {
-        driver = new Driver(BrowserType.Firefox);
+        driver = new Driver(BrowserType.FIREFOX);
         driver.get("https://google.com");
     }
 
