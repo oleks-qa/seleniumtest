@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 public class SearchPage {
 
     private By searchField = By.cssSelector("input#lst-ib");
-    private By firstResult = By.cssSelector("h3.r a");
+    private By secondResult = By.cssSelector("div.g:nth-of-type(2) h3.r a");
     private By headerOfPage = By.cssSelector("h1.entry-title *");
     private By titleElement = By.cssSelector("img#hplogo");
     private By searchResultLink = By.cssSelector("div.g:nth-of-type(2) h3 a");
@@ -29,8 +29,8 @@ public class SearchPage {
         return driver.find(searchField).getAttribute("value");
     }
 
-    public void clickFirstResult() {
-        driver.find(firstResult).click();
+    public void clickOnSecondResult() {
+        driver.find(secondResult).click();
         driver.wait(5);
     }
 
