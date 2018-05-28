@@ -1,6 +1,9 @@
 package com.automation.selenium;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Tests {
 
@@ -35,7 +38,7 @@ public class Tests {
     public void firstResultTest() {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(searchValueWhy);
-        searchPage.clickFirstResult();
+        searchPage.clickOnSecondResult();
         String pageHeader = searchPage.getPageHeader();
         Assert.assertEquals(expectedTitleGitHate, pageHeader);
     }
