@@ -1,6 +1,12 @@
 package com.automation.selenium;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Tests {
 
@@ -57,6 +63,14 @@ public class Tests {
 
     @After
     public void tearDown() {
-        driver.close();
+        try {
+            File screenshotFile = ((TakesScreenshot) driver.webDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshotFile, new File("screenshot.png"));
+            driver.close();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }
