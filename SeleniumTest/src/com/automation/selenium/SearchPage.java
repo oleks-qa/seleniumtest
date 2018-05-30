@@ -4,34 +4,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-public class SearchPage {
+public class SearchPage extends Page {
+
 
     private By searchField = By.cssSelector("input#lst-ib");
     private By secondResult = By.cssSelector("div.g:nth-of-type(2) h3.r a");
+
+    private By firstResult = By.cssSelector("h3.r a");
+
     private By headerOfPage = By.cssSelector("h1.entry-title *");
     private By titleElement = By.cssSelector("img#hplogo");
     private By searchResultLink = By.cssSelector("div.g:nth-of-type(2) h3 a");
 
-    private Driver driver;
 
     public SearchPage(Driver driver){
-        this.driver = driver;
+        super(driver);
     }
 
-    public void setSearchFieldEnter(String text) {
-        WebElement searchFieldElement = driver.find(searchField);
-        searchFieldElement.sendKeys(text);
-        searchFieldElement.sendKeys(Keys.ENTER);
-        driver.wait(5);
-    }
 
-    public String getSearchFieldValue () {
-        return driver.find(searchField).getAttribute("value");
-    }
 
     public void clickOnSecondResult() {
-        driver.find(secondResult).click();
-        driver.wait(5);
+        driver.find(firstResult).click();
     }
 
     public String getPageHeader() {

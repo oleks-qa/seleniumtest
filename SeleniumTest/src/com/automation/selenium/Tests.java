@@ -1,9 +1,12 @@
 package com.automation.selenium;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import java.io.File;
+import java.io.IOException;
+
 
 public class Tests {
 
@@ -23,7 +26,7 @@ public class Tests {
 
     @Before
     public void setUp () {
-        driver = new Driver(BrowserType.Firefox);
+        driver = new Driver(BrowserType.FIREFOX);
         driver.get("https://google.com");
     }
 
@@ -60,6 +63,14 @@ public class Tests {
 
     @After
     public void tearDown() {
-        driver.close();
+        try {
+            File screenshotFile = ((TakesScreenshot) driver.webDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshotFile, new File("screenshot.png"));
+            driver.close();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }
