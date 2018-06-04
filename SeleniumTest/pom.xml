@@ -7,6 +7,8 @@
     <artifactId>SeleniumTest</artifactId>
     <version>1.0</version>
     <build>
+		<sourceDirectory>src/com/automation/selenium</sourceDirectory>
+		<testSourceDirectory>src/com/automation/selenium</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
