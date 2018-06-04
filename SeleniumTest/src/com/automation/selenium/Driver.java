@@ -1,5 +1,3 @@
-package com.automation.selenium;
-
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +8,6 @@ import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

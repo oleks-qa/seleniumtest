@@ -1,5 +1,3 @@
-package com.automation.selenium;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.openqa.selenium.OutputType;
