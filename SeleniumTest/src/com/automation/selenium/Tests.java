@@ -1,15 +1,10 @@
-import org.apache.commons.io.FileUtils;
 import org.junit.*;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-
-import java.io.File;
-import java.io.IOException;
+import org.junit.rules.TestName;
 
 public class Tests {
 
     // Test data
-    public String searchValueSelenium = "selenium";
+    public final String SEARCH_VALUE_SELENIUM = "selenium";
     public String searchValueWhy = "почему гит такой сложный";
     public String expectedTitleGitHate = "Почему я ненавижу Git или Git не должен быть таким сложным для изучения";
     public String expectedTitleAltGoogle = "Google";
@@ -20,23 +15,31 @@ public class Tests {
 
     // WebDriver wrapper
     public Driver driver;
+    public Screenshot screenshot;
 
+    @Rule public TestName name = new TestName();
 
     @Before
     public void setUp () {
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         driver = new Driver(BrowserType.FIREFOX);
         driver.get("https://google.com");
+        screenshot = new Screenshot(driver, methodName);
     }
 
     @Test
     public void searchFieldTest() {
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
-        searchPage.setSearchFieldEnter(searchValueSelenium);
-        Assert.assertTrue(searchValueIncorrect, searchPage.getSearchFieldValue().equals(searchValueSelenium));
+        searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
+        Assert.assertTrue(searchValueIncorrect, searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM));
     }
 
     @Test
     public void firstResultTest() {
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(searchValueWhy);
         searchPage.clickFirstResult();
@@ -46,6 +49,8 @@ public class Tests {
 
     @Test
     public void altTextTitleTest() {
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         String titleAltText = searchPage.getTitleAltText();
         Assert.assertEquals(expectedTitleAltGoogle, titleAltText);
@@ -53,22 +58,21 @@ public class Tests {
 
     @Test
     public void searchResultLinkTest() {
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
-        searchPage.setSearchFieldEnter(searchValueSelenium);
+        searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
         String searchResultLinkText = searchPage.getSecondResultUrl();
-        Assert.assertTrue(searchResultLinkText.toLowerCase().contains(searchValueSelenium));
+        Assert.assertTrue(searchResultLinkText.toLowerCase().contains(SEARCH_VALUE_SELENIUM));
     }
 
     @After
     public void tearDown() {
+        screenshot.takeScreenshot();
         try {
-            File screenshotFile = ((TakesScreenshot) driver.webDriver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshotFile, new File("screenshot.png"));
             driver.close();
         } catch (NullPointerException e) {
             e.printStackTrace();
-        } catch (IOException io) {
-            io.printStackTrace();
         }
     }
 }
