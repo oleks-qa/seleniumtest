@@ -21,16 +21,12 @@ public class Tests {
 
     @Before
     public void setUp () {
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         driver = new Driver(BrowserType.FIREFOX);
         driver.get("https://google.com");
-        screenshot = new Screenshot(driver, methodName);
     }
 
     @Test
     public void searchFieldTest() {
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
         Assert.assertTrue(searchValueIncorrect, searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM));
@@ -38,8 +34,6 @@ public class Tests {
 
     @Test
     public void firstResultTest() {
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(searchValueWhy);
         searchPage.clickFirstResult();
@@ -49,8 +43,6 @@ public class Tests {
 
     @Test
     public void altTextTitleTest() {
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         String titleAltText = searchPage.getTitleAltText();
         Assert.assertEquals(expectedTitleAltGoogle, titleAltText);
@@ -58,8 +50,6 @@ public class Tests {
 
     @Test
     public void searchResultLinkTest() {
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        screenshot.setFileName(methodName);
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
         String searchResultLinkText = searchPage.getSecondResultUrl();
@@ -68,6 +58,7 @@ public class Tests {
 
     @After
     public void tearDown() {
+        screenshot = new Screenshot(driver, name.getMethodName());
         screenshot.takeScreenshot();
         try {
             driver.close();
