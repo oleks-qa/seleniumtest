@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.junit.*;
 import org.junit.rules.TestName;
 
@@ -21,12 +22,18 @@ public class Tests {
 
     @Before
     public void setUp () {
-        driver = new Driver(BrowserType.FIREFOX);
+        driver = new Driver(BrowserType.FIREFOX, name.getMethodName());
         driver.get("https://google.com");
     }
 
     @Test
     public void searchFieldTest() {
+        // JSON data extraction example
+        Json json = new Json("test_data.json");
+        String value = json.jsonObj.getString("test_key_single");
+        JSONArray array = json.jsonObj.getJSONArray("test_key_array");
+        int elementZero = array.getInt(0);
+
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
         Assert.assertTrue(searchValueIncorrect, searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM));
