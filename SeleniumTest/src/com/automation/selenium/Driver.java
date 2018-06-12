@@ -1,5 +1,3 @@
-package com.automation.selenium;
-
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,25 +5,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
-import java.io.IOException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Driver {
     WebDriver webDriver;
-    private static final Logger LOGGER = Logger.getLogger(Driver.class.getName());
+    Log log;
 
-    public Driver(BrowserType browserType) {
-        try {
-            LOGGER.addHandler( new FileHandler("driver.log"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Driver(BrowserType browserType, String fileName) {
+        log = new Log();
+        log.setFileName(fileName);
         Settings settings = new Settings();
         if (settings.getSetting("BROWSER_TYPE").toLowerCase().equals("firefox")) {
             webDriver = new FirefoxDriver();
@@ -33,10 +23,11 @@ public class Driver {
     }
 
     public WebElement find(By selector) {
-        LOGGER.log(Level.INFO, "Searching element: " + selector.toString());
+        log.logger.log(Level.INFO, "Searching element: " + selector.toString());
         WebElement element = fluentWait(30, 500, selector);
         return element;
     }
+
     public WebElement fluentWait(int timeout, int interval, By selector){
         Wait<WebDriver> wait = new FluentWait<WebDriver>(webDriver)
                 .withTimeout(Duration.ofSeconds(timeout))

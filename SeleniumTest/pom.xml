@@ -7,6 +7,8 @@
     <artifactId>SeleniumTest</artifactId>
     <version>1.0</version>
     <build>
+		<sourceDirectory>src/com/automation/selenium</sourceDirectory>
+		<testSourceDirectory>src/com/automation/selenium</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -20,6 +22,11 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.12.0</version>
@@ -32,7 +39,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.9</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
