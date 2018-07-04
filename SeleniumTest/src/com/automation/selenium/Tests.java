@@ -29,10 +29,17 @@ public class Tests {
     @Test
     public void searchFieldTest() {
         // JSON data extraction example
-        Json json = new Json("test_data.json");
-        String value = json.jsonObj.getString("test_key_single");
-        JSONArray array = json.jsonObj.getJSONArray("test_key_array");
-        int elementZero = array.getInt(0);
+        //Json json = new Json("test_data.json");
+        //String value = json.getString("test_key_single");
+        //int elementZero = json.getArray("test_key_array")[0];
+
+        //String email = new HttpRequest("https://jsonplaceholder.typicode.com/comments").getEmail(0);
+
+        String user = "sa";
+        String password = "123123ok";
+        String server = "192.168.202.1";
+        DB db = new DB(server, user, password);
+        db.executeQuery("select * from automation.dbo.names");
 
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
