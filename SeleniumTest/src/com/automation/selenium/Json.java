@@ -23,6 +23,10 @@ public class Json {
         return jsonObj.getString(key);
     }
 
+    public boolean getBoolean(String key) {
+        return jsonObj.getBoolean(key);
+    }
+
     public int[] getArray(String key) {
         JSONArray jsonArray = jsonObj.getJSONArray(key);
         int[] intArray = new int[jsonArray.length()];

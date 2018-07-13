@@ -12,11 +12,16 @@ import java.util.logging.Level;
 public class Driver {
     WebDriver webDriver;
     Log log;
+    boolean screenshotEnabled = false;
 
     public Driver(BrowserType browserType, String fileName) {
         log = new Log();
         log.setFileName(fileName);
         Settings settings = new Settings();
+
+        Json json = new Json("test_data.json");
+        screenshotEnabled = json.getBoolean("screenshot_enabled");
+
         if (settings.getSetting("BROWSER_TYPE").toLowerCase().equals("firefox")) {
             webDriver = new FirefoxDriver();
         } else System.out.println("Browser not defined");
