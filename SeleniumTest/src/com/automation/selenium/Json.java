@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
@@ -16,6 +17,23 @@ public class Json {
             e.printStackTrace();
         }
         jsonObj = new JSONObject(jsonString);
+    }
+
+    public String getString(String key) {
+        return jsonObj.getString(key);
+    }
+
+    public boolean getBoolean(String key) {
+        return jsonObj.getBoolean(key);
+    }
+
+    public int[] getArray(String key) {
+        JSONArray jsonArray = jsonObj.getJSONArray(key);
+        int[] intArray = new int[jsonArray.length()];
+        for (int i=0; i < jsonArray.length(); i++) {
+            intArray[i] = jsonArray.getInt(i);
+        }
+        return intArray;
     }
 
 }
