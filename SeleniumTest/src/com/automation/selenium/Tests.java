@@ -31,7 +31,7 @@ public class Tests {
 
     @Test
     public void mongoTest() {
-        Mongo mongo = new Mongo("192.168.3.147", "automation");
+        Mongo mongo = new Mongo("12", "automation");
         for (Document doc : mongo.getDocuments("id",1)) {
             System.out.println(doc.getString("name"));
         }
