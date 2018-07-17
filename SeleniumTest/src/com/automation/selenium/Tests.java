@@ -1,8 +1,10 @@
 import org.bson.Document;
 import org.json.JSONArray;
-import org.junit.*;
-import org.junit.rules.TestName;
+import org.testng.*;
+import org.testng.annotations.*;
+import java.lang.reflect.Method;
 
+@Listeners(Listener.class)
 public class Tests {
 
     // Test data
@@ -19,15 +21,15 @@ public class Tests {
     public Driver driver;
     public Screenshot screenshot;
 
-    @Rule public TestName name = new TestName();
+    //@Rule public TestName name = new TestName();
 
-    @Before
-    public void setUp () {
-        driver = new Driver(BrowserType.FIREFOX, name.getMethodName());
+    @BeforeMethod
+    public void setUp (Method method) {
+        driver = new Driver(BrowserType.FIREFOX, method.getName());
         driver.get("https://google.com");
     }
 
-
+    @Ignore
     @Test
     public void mongoTest() {
         Mongo mongo = new Mongo("192.168.1.57", "automation");
@@ -57,12 +59,11 @@ public class Tests {
         System.out.println(email);
     }
 
-    @Ignore
     @Test
     public void searchFieldTest() {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
-        Assert.assertTrue(searchValueIncorrect, searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM));
+        Assert.assertTrue(searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM), searchValueIncorrect);
     }
 
     @Ignore
@@ -92,9 +93,9 @@ public class Tests {
         Assert.assertTrue(searchResultLinkText.toLowerCase().contains(SEARCH_VALUE_SELENIUM));
     }
 
-    @After
-    public void tearDown() {
-        screenshot = new Screenshot(driver, name.getMethodName());
+    @AfterMethod
+    public void tearDown(Method method) {
+        screenshot = new Screenshot(driver, method.getName());
         screenshot.takeScreenshot();
         try {
             driver.close();
