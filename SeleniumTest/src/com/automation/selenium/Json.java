@@ -23,6 +23,10 @@ public class Json {
         return jsonObj.getString(key);
     }
 
+    public int getInt(String key) {
+        return jsonObj.getInt(key);
+    }
+
     public boolean getBoolean(String key) {
         return jsonObj.getBoolean(key);
     }

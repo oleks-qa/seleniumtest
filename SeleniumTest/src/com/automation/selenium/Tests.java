@@ -28,11 +28,11 @@ public class Tests {
         driver.get("https://google.com");
     }
 
-
     @Test
     public void mongoTest() {
+        Json json = new Json("test_data.json");
         Mongo mongo = new Mongo("localhost", "automation");
-        for (Document doc : mongo.getDocuments("id",1)) {
+        for (Document doc : mongo.getDocuments("id",json.getInt("db_item"))) {
             System.out.println(doc.getString("name"));
         }
     }
