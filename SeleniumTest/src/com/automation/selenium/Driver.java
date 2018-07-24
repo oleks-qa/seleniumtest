@@ -13,14 +13,20 @@ public class Driver {
     WebDriver webDriver;
     Log log;
     boolean screenshotEnabled = false;
+    boolean logEnabled = false;
 
     public Driver(BrowserType browserType, String fileName) {
-        log = new Log();
-        log.setFileName(fileName);
+
+
         Settings settings = new Settings();
 
         Json json = new Json("test_data.json");
         screenshotEnabled = json.getBoolean("screenshot_enabled");
+
+        logEnabled = json.getBoolean("log_enabled");
+
+        log = new Log(this);
+        log.setFileName(fileName);
 
         if (settings.getSetting("BROWSER_TYPE").toLowerCase().equals("firefox")) {
             webDriver = new FirefoxDriver();
@@ -28,7 +34,7 @@ public class Driver {
     }
 
     public WebElement find(By selector) {
-        log.logger.log(Level.INFO, "Searching element: " + selector.toString());
+        log.log(Level.INFO, "Searching element: " + selector.toString());
         WebElement element = fluentWait(30, 500, selector);
         return element;
     }

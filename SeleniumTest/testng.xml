@@ -2,9 +2,10 @@
 <suite name="example suite 1" verbose="1" >
     <test name="Regression suite 1" >
         <classes>
+            <parameter name="SearchValue" value = "jmeter" />
             <class name="Tests">
                 <methods>
-                    <exclude name="searchFieldTest"/>
+                    <exclude name="mongoTest"/>
                 </methods>
             </class>
         </classes>

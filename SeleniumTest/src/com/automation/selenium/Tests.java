@@ -3,6 +3,7 @@ import org.json.JSONArray;
 import org.testng.*;
 import org.testng.annotations.*;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 @Listeners(Listener.class)
 public class Tests {
@@ -23,11 +24,18 @@ public class Tests {
 
     //@Rule public TestName name = new TestName();
 
+
+    @DataProvider (name="SearchValues")
+    private static Object[] getSearchValues() {
+        return new Object[] { "jmeter", "selenium"};
+    }
+
     @BeforeMethod
     public void setUp (Method method) {
         driver = new Driver(BrowserType.FIREFOX, method.getName());
         driver.get("https://google.com");
     }
+
 
     @Ignore
     @Test
@@ -59,11 +67,11 @@ public class Tests {
         System.out.println(email);
     }
 
-    @Test
-    public void searchFieldTest() {
+    @Test (dataProvider = "SearchValues")
+    public void searchFieldTest(String searchValue) {
         SearchPage searchPage = new SearchPage(driver);
-        searchPage.setSearchFieldEnter(SEARCH_VALUE_SELENIUM);
-        Assert.assertTrue(searchPage.getSearchFieldValue().equals(SEARCH_VALUE_SELENIUM), searchValueIncorrect);
+        searchPage.setSearchFieldEnter(searchValue);
+        Assert.assertTrue(searchPage.getSearchFieldValue().equals(searchValue), searchValueIncorrect);
     }
 
     @Ignore
