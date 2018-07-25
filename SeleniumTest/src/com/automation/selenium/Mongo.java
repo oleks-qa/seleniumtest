@@ -6,12 +6,18 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 public class Mongo {
-
+private static Mongo mongo;
 private MongoDatabase mongoDB = null;
 
-public Mongo(String host, String db) {
+private Mongo(String host, String db) {
     MongoClient mongoClient = new MongoClient(host);
     mongoDB = mongoClient.getDatabase(db);
+}
+
+public static Mongo getInstance(String host, String db){
+    if(mongo == null)
+        mongo  = new Mongo(host, db);
+    return mongo;
 }
 
 public FindIterable<Document> getDocuments (String key, int value) {
@@ -21,5 +27,4 @@ public FindIterable<Document> getDocuments (String key, int value) {
     FindIterable<Document> docs = collection.find(query);
     return docs;
 }
-
 }

@@ -36,11 +36,9 @@ public class Tests {
         driver.get("https://google.com");
     }
 
-
-    @Ignore
     @Test
     public void mongoTest() {
-        Mongo mongo = new Mongo("192.168.1.57", "automation");
+        Mongo mongo = Mongo.getInstance("192.168.1.57", "automation");
         for (Document doc : mongo.getDocuments("id",1)) {
             System.out.println(doc.getString("name"));
         }
