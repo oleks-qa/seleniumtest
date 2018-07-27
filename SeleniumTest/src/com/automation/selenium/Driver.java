@@ -25,7 +25,7 @@ public class Driver {
 
         logEnabled = json.getBoolean("log_enabled");
 
-        log = new Log(this);
+        log =  Log.getInstance(this);
         log.setFileName(fileName);
 
         if (settings.getSetting("BROWSER_TYPE").toLowerCase().equals("firefox")) {

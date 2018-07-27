@@ -6,15 +6,22 @@ import java.util.logging.Logger;
 public class Log {
 
     private Logger logger;
-    private Driver driver;
+    private boolean logEnabled;
+    private static Log log;
 
-    public Log(Driver driver) {
-        this.driver = driver;
+    private Log(Driver driver) {
+        this.logEnabled = driver.logEnabled;
         logger = Logger.getLogger(Driver.class.getName());
     }
 
+    public static Log getInstance(Driver driver) {
+        if (log == null)
+            log = new Log(driver);
+        return log;
+    }
+
     public void setFileName(String fileName) {
-        if (!driver.logEnabled)
+        if (!logEnabled)
             return;
         try {
             logger.addHandler( new FileHandler(fileName + ".log"));
@@ -24,7 +31,7 @@ public class Log {
     }
 
     public void log(Level level, String message) {
-        if (!driver.logEnabled)
+        if (!logEnabled)
             return;
         logger.log(level, message);
     }
