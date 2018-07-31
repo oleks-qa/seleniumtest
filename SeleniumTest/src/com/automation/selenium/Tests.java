@@ -32,7 +32,7 @@ public class Tests {
 
     @BeforeMethod
     public void setUp (Method method) {
-        driver = new Driver(BrowserType.FIREFOX, method.getName());
+        driver = new Driver(method.getName());
         driver.get("https://google.com");
     }
 
@@ -72,6 +72,12 @@ public class Tests {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(searchValue);
         Assert.assertTrue(searchPage.getSearchFieldValue().equals(searchValue), searchValueIncorrect);
+    }
+
+    @Test
+    public void jsTest() {
+        driver.webDriver.get("https://hotline.ua/computer/noutbuki-netbuki/");
+        driver.execJs("for (var i=0; i < 10; i++) { document.getElementsByClassName('check')[i].click(); }");
     }
 
     @Ignore

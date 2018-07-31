@@ -1,1 +1,3 @@
 BROWSER_TYPE=FIREFOX
+HUB_URL=http://localhost:4446/wd/hub
+IS_REMOTE=FALSE
