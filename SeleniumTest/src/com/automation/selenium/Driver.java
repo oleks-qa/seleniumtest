@@ -1,10 +1,19 @@
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.function.Function;
 import java.util.logging.Level;
@@ -13,24 +22,75 @@ public class Driver {
     WebDriver webDriver;
     Log log;
     boolean screenshotEnabled = false;
-    boolean logEnabled = false;
 
-    public Driver(BrowserType browserType, String fileName) {
+    public Driver(String fileName) {
 
 
         Settings settings = new Settings();
 
+        // reading properties
         Json json = new Json("test_data.json");
         screenshotEnabled = json.getBoolean("screenshot_enabled");
+        BrowserType browserType = BrowserType.valueOf(settings.getSetting("BROWSER_TYPE").toUpperCase());
+        String hubUrl = settings.getSetting("HUB_URL");
+        boolean isRemote = Boolean.parseBoolean(settings.getSetting("IS_REMOTE"));
+        boolean logEnabled = json.getBoolean("log_enabled");
 
-        logEnabled = json.getBoolean("log_enabled");
-
-        log = new Log(this);
+        log = Log.getInstance(logEnabled);
         log.setFileName(fileName);
 
-        if (settings.getSetting("BROWSER_TYPE").toLowerCase().equals("firefox")) {
-            webDriver = new FirefoxDriver();
-        } else System.out.println("Browser not defined");
+       // Capabilities capabilities = null;
+        Class<?> webDriverClass = WebDriver.class;
+        Class<?> capabilitiesClass = Capabilities.class;
+        switch (browserType) {
+            case FIREFOX:
+                capabilitiesClass = FirefoxOptions.class;
+                webDriverClass = FirefoxDriver.class;
+                break;
+            case CHROME:
+                capabilitiesClass = ChromeOptions.class;
+                webDriverClass = ChromeDriver.class;
+                break;
+            case IE:
+                capabilitiesClass = InternetExplorerOptions.class;
+                webDriverClass = InternetExplorerDriver.class;
+                break;
+            case SAFARI:
+                capabilitiesClass = SafariOptions.class;
+                webDriverClass = SafariDriver.class;
+                break;
+            default:
+                log.log(Level.SEVERE, "Incorrect browser");
+                break;
+        }
+        if (isRemote) {
+            try {
+                Capabilities capabilities = (Capabilities) capabilitiesClass.getConstructor().newInstance();
+                webDriver = new RemoteWebDriver(new URL(hubUrl), capabilities);
+            } catch (MalformedURLException e) {
+                log.log(Level.SEVERE, "Incorrect selenium hub URL");
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                webDriver = (WebDriver) webDriverClass.getConstructor().newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public WebElement find(By selector) {
@@ -38,6 +98,11 @@ public class Driver {
         WebElement element = fluentWait(30, 500, selector);
         return element;
     }
+
+    public void execJs(String jsCode) {
+        ((JavascriptExecutor) webDriver).executeScript(jsCode);
+    }
+
 
     public WebElement fluentWait(int timeout, int interval, By selector){
         Wait<WebDriver> wait = new FluentWait<WebDriver>(webDriver)
