@@ -1,3 +1,8 @@
+package com.automation.driver;
+
+import com.automation.utils.Json;
+import com.automation.utils.Log;
+import com.automation.utils.Settings;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,11 +24,15 @@ import java.util.function.Function;
 import java.util.logging.Level;
 
 public class Driver {
-    WebDriver webDriver;
+    public WebDriver webDriver;
     Log log;
     boolean screenshotEnabled = false;
 
-    public Driver(String fileName) {
+    /** Constructor for a Driver object, which is a wrapper for Selenium WebDriver
+     *
+     * @param logFileName filename for a log which is initialized together with Driver object
+     */
+    public Driver(String logFileName) {
 
 
         Settings settings = new Settings();
@@ -37,8 +46,9 @@ public class Driver {
         boolean logEnabled = json.getBoolean("log_enabled");
 
         log = Log.getInstance(logEnabled);
-        log.setFileName(fileName);
+        log.setFileName(logFileName);
 
+        // setting up capabilities for RemoteDriver
         Capabilities capabilities = null;
         Class<?> webDriverClass = WebDriver.class;
         switch (browserType) {
@@ -62,6 +72,8 @@ public class Driver {
                 log.log(Level.SEVERE, "Incorrect browser");
                 break;
         }
+
+        // creating WebDriver
         if (isRemote) {
             try {
                 webDriver = new RemoteWebDriver(new URL(hubUrl), capabilities);
@@ -89,11 +101,21 @@ public class Driver {
         return element;
     }
 
+    /**
+     *  Method to execute Javascript code on a current page
+     * @param jsCode code to execute
+     */
     public void execJs(String jsCode) {
         ((JavascriptExecutor) webDriver).executeScript(jsCode);
     }
 
-
+    /**
+     * Flexible WebElement search method, can ignore specific exceptions
+     * @param timeout seconds
+     * @param interval milliseconds
+     * @param selector Selenium By selector
+     * @return
+     */
     public WebElement fluentWait(int timeout, int interval, By selector){
         Wait<WebDriver> wait = new FluentWait<WebDriver>(webDriver)
                 .withTimeout(Duration.ofSeconds(timeout))

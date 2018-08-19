@@ -1,3 +1,5 @@
+package com.automation.utils;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;

@@ -3,7 +3,7 @@
 <test name="Regression suite 1" >
     <classes>
         <parameter name="SearchValue" value = "jmeter" />
-        <class name="Tests">
+        <class name="com.automation.tests.Tests">
             <methods>
                 <exclude name="mongoTest"/>
             </methods>

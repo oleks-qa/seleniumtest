@@ -1,3 +1,5 @@
+package com.automation.utils;
+
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -11,7 +13,7 @@ public class Log {
 
     private Log(boolean isEnabled) {
         this.isEnabled = isEnabled;
-        logger = Logger.getLogger(Driver.class.getName());
+        logger = Logger.getLogger("test");
     }
 
     public static Log getInstance(boolean isEnabled) {

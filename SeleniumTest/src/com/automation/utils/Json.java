@@ -1,3 +1,5 @@
+package com.automation.utils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.commons.io.FileUtils;

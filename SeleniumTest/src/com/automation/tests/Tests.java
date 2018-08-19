@@ -1,3 +1,12 @@
+package com.automation.tests;
+
+import com.automation.driver.Driver;
+import com.automation.listeners.Listener;
+import com.automation.pages.SearchPage;
+import com.automation.utils.DB;
+import com.automation.utils.HttpRequest;
+import com.automation.utils.Json;
+import com.automation.utils.Mongo;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.testng.*;
@@ -10,8 +19,8 @@ public class Tests {
 
     // Test data
     public final String SEARCH_VALUE_SELENIUM = "selenium";
-    public String searchValueWhy = "почему гит такой сложный";
-    public String expectedTitleGitHate = "Почему я ненавижу Git или Git не должен быть таким сложным для изучения";
+    public String searchValueWhy = "why git is so complicated";
+    public String expectedTitleGitHate = "why do I hate git";
     public String expectedTitleAltGoogle = "Google";
 
     // Error messages
@@ -20,7 +29,6 @@ public class Tests {
 
     // WebDriver wrapper
     public Driver driver;
-    public Screenshot screenshot;
 
     //@Rule public TestName name = new TestName();
 
@@ -31,9 +39,10 @@ public class Tests {
     }
 
     @BeforeMethod
-    public void setUp (Method method) {
+    public void setUp (Method method, ITestResult testResult) {
         driver = new Driver(method.getName());
         driver.get("https://google.com");
+        testResult.setAttribute("driver", driver);
     }
 
 
@@ -72,6 +81,7 @@ public class Tests {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.setSearchFieldEnter(searchValue);
         Assert.assertTrue(searchPage.getSearchFieldValue().equals(searchValue), searchValueIncorrect);
+        Assert.fail();
     }
 
     @Test
@@ -109,8 +119,6 @@ public class Tests {
 
     @AfterMethod
     public void tearDown(Method method) {
-        screenshot = new Screenshot(driver, method.getName());
-        screenshot.takeScreenshot();
         try {
             driver.close();
         } catch (NullPointerException e) {

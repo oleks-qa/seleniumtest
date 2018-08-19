@@ -1,3 +1,5 @@
+package com.automation.utils;
+
 import java.sql.*;
 
 public class DB {
