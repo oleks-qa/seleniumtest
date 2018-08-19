@@ -1,7 +1,8 @@
-import org.testng.IRetryAnalyzer;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+package com.automation.tests.Listener;
+
+import com.automation.driver.Driver;
+import com.automation.driver.Screenshot;
+import org.testng.*;
 
 public class Listener implements ITestListener {
     @Override
@@ -16,7 +17,9 @@ public class Listener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-
+        Driver driver = (Driver) iTestResult.getAttribute("driver");
+        Screenshot screenshot = new Screenshot(driver, iTestResult.getTestName());
+        screenshot.takeScreenshot();
     }
 
     @Override
@@ -31,7 +34,6 @@ public class Listener implements ITestListener {
 
     @Override
     public void onStart(ITestContext iTestContext) {
-
     }
 
     @Override

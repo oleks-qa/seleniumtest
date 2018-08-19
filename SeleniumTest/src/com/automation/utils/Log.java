@@ -1,3 +1,6 @@
+package com.automation.utils;
+import com.automation.driver.Driver;
+
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

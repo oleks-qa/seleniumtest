@@ -1,3 +1,6 @@
+package com.automation.pages;
+
+import com.automation.driver.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;

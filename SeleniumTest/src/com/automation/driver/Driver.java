@@ -1,3 +1,9 @@
+package com.automation.driver;
+
+import com.automation.utils.Json;
+import com.automation.utils.Log;
+import com.automation.utils.Settings;
+import com.automation.driver.BrowserType;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,8 +25,8 @@ import java.util.function.Function;
 import java.util.logging.Level;
 
 public class Driver {
-    WebDriver webDriver;
-    Log log;
+    public WebDriver webDriver;
+    public Log log;
     boolean screenshotEnabled = false;
 
     public Driver(String fileName) {

@@ -1,3 +1,5 @@
+package com.automation.utils;
+
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -8,7 +10,7 @@ public class HttpRequest {
 
     private JSONArray jsonArray;
 
-    HttpRequest(String url) {
+    public HttpRequest(String url) {
         jsonArray = getJSONArray(url);
     }
 

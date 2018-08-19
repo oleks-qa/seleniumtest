@@ -1,9 +1,19 @@
+package com.automation.tests;
+
+import com.automation.driver.Driver;
+import com.automation.pages.SearchPage;
+import com.automation.tests.Listener.Listener;
+import com.automation.utils.DB;
+import com.automation.utils.HttpRequest;
+import com.automation.utils.Json;
+import com.automation.utils.Mongo;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.testng.*;
 import org.testng.annotations.*;
 import java.lang.reflect.Method;
 import java.util.Random;
+import java.util.logging.Level;
 
 @Listeners(Listener.class)
 public class Tests {
@@ -20,9 +30,6 @@ public class Tests {
 
     // WebDriver wrapper
     public Driver driver;
-    public Screenshot screenshot;
-
-    //@Rule public TestName name = new TestName();
 
 
     @DataProvider (name="SearchValues")
@@ -31,9 +38,10 @@ public class Tests {
     }
 
     @BeforeMethod
-    public void setUp (Method method) {
+    public void setUp (Method method, ITestResult testResult) {
         driver = new Driver(method.getName());
         driver.get("https://google.com");
+        testResult.setAttribute("driver", driver);
     }
 
 
@@ -78,6 +86,7 @@ public class Tests {
     public void jsTest() {
         driver.webDriver.get("https://hotline.ua/computer/noutbuki-netbuki/");
         driver.execJs("for (var i=0; i < 10; i++) { document.getElementsByClassName('check')[i].click(); }");
+        Assert.fail();
     }
 
     @Ignore
@@ -109,8 +118,6 @@ public class Tests {
 
     @AfterMethod
     public void tearDown(Method method) {
-        screenshot = new Screenshot(driver, method.getName());
-        screenshot.takeScreenshot();
         try {
             driver.close();
         } catch (NullPointerException e) {
