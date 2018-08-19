@@ -8,20 +8,17 @@ import com.automation.utils.HttpRequest;
 import com.automation.utils.Json;
 import com.automation.utils.Mongo;
 import org.bson.Document;
-import org.json.JSONArray;
 import org.testng.*;
 import org.testng.annotations.*;
 import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.logging.Level;
 
 @Listeners(Listener.class)
 public class Tests {
 
     // Test data
     public final String SEARCH_VALUE_SELENIUM = "selenium";
-    public String searchValueWhy = "почему гит такой сложный";
-    public String expectedTitleGitHate = "Почему я ненавижу Git или Git не должен быть таким сложным для изучения";
+    public String searchValueWhy = "why git is so complicated";
+    public String expectedTitleGitHate = "why do i hate git";
     public String expectedTitleAltGoogle = "Google";
 
     // Error messages
