@@ -7,6 +7,7 @@
     <artifactId>SeleniumTest</artifactId>
     <version>1.0</version>
     <build>
+        <sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>src/com/automation/tests</testSourceDirectory>
         <plugins>
             <plugin>

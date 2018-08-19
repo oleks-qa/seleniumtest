@@ -2,7 +2,7 @@ package com.automation.tests;
 
 import com.automation.driver.Driver;
 import com.automation.pages.SearchPage;
-import com.automation.tests.Listener.Listener;
+import com.automation.tests.Listener;
 import com.automation.utils.DB;
 import com.automation.utils.HttpRequest;
 import com.automation.utils.Json;

@@ -1,4 +1,4 @@
-package com.automation.tests.Listener;
+package com.automation.tests;
 
 import com.automation.driver.Driver;
 import com.automation.driver.Screenshot;
